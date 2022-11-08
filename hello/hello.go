@@ -12,13 +12,19 @@ func Hello(name, language string) string {
 	if name == "" {
 		name = "World"
 	}
-	greetingPrefix := ENGLISH_GREETING
-	if language == SPANISH_LANG {
-		greetingPrefix = SPANISH_GREETING
-	} else if language == FRENCH_LANG {
-		greetingPrefix = FRENCH_GREETING
-	}
+	greetingPrefix := getGreetingPrefix(language)
 	return fmt.Sprintf("%s, %s", greetingPrefix, name)
+}
+
+func getGreetingPrefix(language string) string {
+	switch language {
+	case SPANISH_LANG:
+		return SPANISH_GREETING
+	case FRENCH_LANG:
+		return FRENCH_GREETING
+	default:
+		return ENGLISH_GREETING
+	}
 }
 
 func main() {
