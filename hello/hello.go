@@ -16,15 +16,16 @@ func Hello(name, language string) string {
 	return fmt.Sprintf("%s, %s", greetingPrefix, name)
 }
 
-func getGreetingPrefix(language string) string {
+func getGreetingPrefix(language string) (prefix string) {
 	switch language {
 	case SPANISH_LANG:
-		return SPANISH_GREETING
+		prefix = SPANISH_GREETING
 	case FRENCH_LANG:
-		return FRENCH_GREETING
+		prefix = FRENCH_GREETING
 	default:
-		return ENGLISH_GREETING
+		prefix = ENGLISH_GREETING
 	}
+	return
 }
 
 func main() {
