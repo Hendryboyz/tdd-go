@@ -29,9 +29,17 @@ func assertSumSlice(t testing.TB, expected int, actual int, slice []int) {
 }
 
 func TestSumAll(t *testing.T) {
-	t.Run("sum of two slices", func(t *testing.T) {
-		actual := SumAll([]int{0, 1}, []int{3, 9})
-		expected := []int{3, 10}
+	t.Run("sum of 2 slices", func(t *testing.T) {
+		actual := SumAll([]int{1, 2}, []int{0, 9})
+		expected := []int{3, 9}
+		if !reflect.DeepEqual(actual, expected) {
+			t.Errorf("Expected %v, but actual %v", expected, actual)
+		}
+	})
+
+	t.Run("sum of 1 slices", func(t *testing.T) {
+		actual := SumAll([]int{1, 1, 1})
+		expected := []int{3}
 		if !reflect.DeepEqual(actual, expected) {
 			t.Errorf("Expected %v, but actual %v", expected, actual)
 		}
