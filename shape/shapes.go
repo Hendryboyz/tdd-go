@@ -2,6 +2,11 @@ package shape
 
 import "math"
 
+// Go interface resolution is implicit.
+type Shape interface {
+	Area() float64
+}
+
 type Rectangle struct {
 	Width  float64
 	Height float64
