@@ -2,18 +2,29 @@ package wallet
 
 import "fmt"
 
+type Stringer interface {
+	// String() function like ToString() in java
+	String() string
+}
+
+type Bitcoin float64
+
+func (b Bitcoin) String() string {
+	return fmt.Sprintf("%.2f BTC", b)
+}
+
 type Wallet struct {
-	balance float64
+	balance Bitcoin
 }
 
 // In Go, when you call a function or a method the arguments are copied.
 // use pointer herer to change the private variable
-func (w *Wallet) Deposit(amount float64) {
-	fmt.Printf("address of balance in Deposit is %v \n", &w.balance)
+func (w *Wallet) Deposit(amount Bitcoin) {
+	// fmt.Printf("address of balance in Deposit is %v \n", &w.balance)
 	w.balance += amount
 }
 
-func (w *Wallet) Balance() float64 {
+func (w *Wallet) Balance() Bitcoin {
 	// return (*w).balance is the same notion below
 	return w.balance // automatically dereferenced
 }
