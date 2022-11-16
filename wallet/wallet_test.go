@@ -35,4 +35,18 @@ func TestWallet(t *testing.T) {
 		assertBitcoin(t, wallet, Bitcoin(15.0))
 	})
 
+	t.Run("Withdraw insufficient funds", func(t *testing.T) {
+		// Arrange
+		startingBalance := Bitcoin(10.2)
+		wallet := Wallet{balance: startingBalance}
+
+		// Action
+		err := wallet.Withdraw(Bitcoin(16.2))
+
+		// Assert
+		assertBitcoin(t, wallet, startingBalance)
+		if err == nil {
+			t.Error("Need to return an error while withdrawing the amount exceed the balance.")
+		}
+	})
 }

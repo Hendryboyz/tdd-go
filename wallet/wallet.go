@@ -1,6 +1,9 @@
 package wallet
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type Stringer interface {
 	// String() function like ToString() in java
@@ -29,6 +32,10 @@ func (w *Wallet) Balance() Bitcoin {
 	return w.balance // automatically dereferenced
 }
 
-func (w *Wallet) Withdraw(amount Bitcoin) {
+func (w *Wallet) Withdraw(amount Bitcoin) error {
+	if w.balance < amount {
+		return errors.New("Insufficent Balance!")
+	}
 	w.balance -= amount
+	return nil
 }
