@@ -35,6 +35,16 @@ func TestWallet(t *testing.T) {
 		assertBitcoin(t, wallet, Bitcoin(15.0))
 	})
 
+	assertError := func(t testing.TB, err error, expectedMessage string) {
+		t.Helper()
+		if err == nil {
+			t.Fatal("Need to return an error while withdrawing the amount exceed the balance.")
+		}
+		if err.Error() != expectedMessage {
+			t.Errorf("Expected: %s, but actual: %s", expectedMessage, err.Error())
+		}
+	}
+
 	t.Run("Withdraw insufficient funds", func(t *testing.T) {
 		// Arrange
 		startingBalance := Bitcoin(10.2)
@@ -45,8 +55,6 @@ func TestWallet(t *testing.T) {
 
 		// Assert
 		assertBitcoin(t, wallet, startingBalance)
-		if err == nil {
-			t.Error("Need to return an error while withdrawing the amount exceed the balance.")
-		}
+		assertError(t, err, "Cannot withdraw, insufficient funds!")
 	})
 }
