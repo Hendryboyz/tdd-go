@@ -20,4 +20,21 @@ func TestWallet(t *testing.T) {
 			t.Errorf("Expected %s, but actual %s", expected, actual)
 		}
 	})
+
+	t.Run("Withdraw", func(t *testing.T) {
+		// Arrange
+		wallet := Wallet{}
+		wallet.Deposit(Bitcoin(30.2))
+
+		// Action
+		wallet.Withdraw(Bitcoin(15.2))
+
+		// Assert
+		actual := wallet.Balance()
+		expected := Bitcoin(15.0)
+		if actual != expected {
+			t.Errorf("Expected %s, but actual %s", expected, actual)
+		}
+	})
+
 }

@@ -28,3 +28,7 @@ func (w *Wallet) Balance() Bitcoin {
 	// return (*w).balance is the same notion below
 	return w.balance // automatically dereferenced
 }
+
+func (w *Wallet) Withdraw(amount Bitcoin) {
+	w.balance -= amount
+}
