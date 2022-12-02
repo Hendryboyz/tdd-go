@@ -1,6 +1,6 @@
 # tdd-go
 
-A repository to practice TDD(Test Driven Development) with GoLang
+A repository to practice TDD(Test Driven Development) with GoLang. This practice follow the steps from [Learn Go with Tests](https://quii.gitbook.io/learn-go-with-tests/) website.
 
 ## Command
 
