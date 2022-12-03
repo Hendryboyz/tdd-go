@@ -20,7 +20,7 @@ func TestSearch(t *testing.T) {
 			t.Fatal("Expect to return an error.")
 		}
 
-		assertError(t, err, KeyNotFoundError)
+		assertError(t, err, ErrorKeyNotFound)
 	})
 }
 
@@ -39,14 +39,25 @@ func assertStrings(t testing.TB, actual, expected string) {
 }
 
 func TestAdd(t *testing.T) {
-	dict := Dictionary{}
-	key := "hello"
-	value := "dictionary"
+	t.Run("new word", func(t *testing.T) {
+		dict := Dictionary{}
+		key := "hello"
+		value := "dictionary"
 
-	dict.Add("hello", "dictionary")
+		dict.Add("hello", "dictionary")
 
-	assertValue(t, dict, key, value)
+		assertValue(t, dict, key, value)
+	})
 
+	t.Run("existing word", func(t *testing.T) {
+		key := "word"
+		value := "existing value"
+		dict := Dictionary{key: value}
+
+		err := dict.Add(key, "new value")
+		assertError(t, err, ErrorKeyExisting)
+		assertValue(t, dict, key, value)
+	})
 }
 
 func assertValue(t testing.TB, dict Dictionary, key, value string) {
@@ -59,4 +70,42 @@ func assertValue(t testing.TB, dict Dictionary, key, value string) {
 	}
 
 	assertStrings(t, actual, value)
+}
+
+func TestUpdate(t *testing.T) {
+	t.Run("existing word", func(t *testing.T) {
+		key := "hello"
+		value := "not world"
+		dict := Dictionary{key: value}
+
+		expected := "world"
+		dict.Update(key, expected)
+
+		assertValue(t, dict, key, expected)
+	})
+
+	t.Run("not existing key", func(t *testing.T) {
+		word := "hello"
+		def := "world"
+
+		dict := Dictionary{}
+
+		err := dict.Update(word, def)
+
+		assertError(t, err, ErrorWordNotExisting)
+	})
+}
+
+func TestDelete(t *testing.T) {
+	word := "key"
+
+	dict := Dictionary{word: "definition"}
+
+	dict.Delete(word)
+
+	_, err := dict.Search(word)
+
+	if err != ErrorKeyNotFound {
+		t.Errorf("Expect %q to be deleted", word)
+	}
 }
