@@ -21,6 +21,10 @@ func AssertEqual[T comparable](t *testing.T, expect, actual T) {
 	}
 }
 
+//// The same signature below. In Go 1.18, any is the alias for interface{}
+// func AssertNotEqual(t *testing.T, expect, actual interface{})
+// func AssertNotEqual[T any](t *testing.T, expect, actual T)
+
 func AssertNotEqual[T comparable](t *testing.T, expect, actual T) {
 	t.Helper()
 	if expect == actual {
