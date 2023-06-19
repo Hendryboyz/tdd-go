@@ -9,19 +9,19 @@ func TestAssertFunctions(t *testing.T) {
 	})
 
 	t.Run("asserting on string", func(t *testing.T) {
-		AssertEqual(t, "hello", "hello")
-		AssertNotEqual(t, "hello", "greeting")
+		AssertEqual[string](t, "hello", "hello")
+		AssertNotEqual[string](t, "hello", "greeting")
 	})
 }
 
-func AssertEqual(t *testing.T, expect, actual interface{}) {
+func AssertEqual[T comparable](t *testing.T, expect, actual T) {
 	t.Helper()
 	if expect != actual {
 		t.Errorf("got %+v, want %+v\n", actual, expect)
 	}
 }
 
-func AssertNotEqual(t *testing.T, expect, actual interface{}) {
+func AssertNotEqual[T comparable](t *testing.T, expect, actual T) {
 	t.Helper()
 	if expect == actual {
 		t.Errorf("didn't want %+v\n", actual)
