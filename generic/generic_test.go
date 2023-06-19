@@ -17,13 +17,13 @@ func TestAssertFunctions(t *testing.T) {
 func AssertEqual(t *testing.T, expect, actual interface{}) {
 	t.Helper()
 	if expect != actual {
-		t.Errorf("got %d, want %d\n", actual, expect)
+		t.Errorf("got %+v, want %+v\n", actual, expect)
 	}
 }
 
 func AssertNotEqual(t *testing.T, expect, actual interface{}) {
 	t.Helper()
 	if expect == actual {
-		t.Errorf("didn't want %d\n", actual)
+		t.Errorf("didn't want %+v\n", actual)
 	}
 }
