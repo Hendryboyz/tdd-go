@@ -37,5 +37,20 @@ func TestStack(t *testing.T) {
 		AssertTrue(t, stack.IsEmpty())
 	})
 
-	t.Run("test string stack", func(t *testing.T) {})
+	t.Run("test string stack", func(t *testing.T) {
+		stack := new(generic.StackOfString)
+
+		AssertTrue(t, stack.IsEmpty())
+
+		stack.Push("hello")
+		AssertFalse(t, stack.IsEmpty())
+
+		stack.Push("world")
+		val, _ := stack.Pop()
+		AssertEqual(t, "world", val)
+
+		val, _ = stack.Pop()
+		AssertEqual(t, "hello", val)
+		AssertTrue(t, stack.IsEmpty())
+	})
 }
