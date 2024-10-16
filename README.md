@@ -19,6 +19,9 @@ go test -cover
 
 # view the document in http://localhost:6060/pkg/
 $ godoc -http=:6060
+
+# format current directory
+$ gofmt -w .
 ```
 
 ## Dependencies Modules
