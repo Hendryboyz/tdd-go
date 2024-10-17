@@ -1,8 +1,7 @@
-package shape
+package geometry
 
 import "math"
 
-// Go interface resolution is implicit.
 type Shape interface {
 	Area() float64
 }
@@ -12,11 +11,14 @@ type Rectangle struct {
 	Height float64
 }
 
-func Preimeter(rect Rectangle) float64 {
-	return 2 * (rect.Width + rect.Height)
+// function
+func CalculatePerimeter(rectangle Rectangle) float64 {
+	return 2 * (rectangle.Width + rectangle.Height)
 }
 
-// func (receiverName ReceiverType) MethodName(args) returnType {}
+// method is a function with receiver
+// func (receiverName ReceiverType) MethodName(args)
+// Area implements Shape.
 func (r Rectangle) Area() float64 {
 	return r.Width * r.Height
 }
@@ -26,12 +28,12 @@ type Circle struct {
 }
 
 func (c Circle) Area() float64 {
-	return math.Pi * c.Radius * c.Radius
+	return math.Pi * math.Pow(c.Radius, 2)
 }
 
 type Triangle struct {
-	Base   float64
 	Height float64
+	Base   float64
 }
 
 func (t Triangle) Area() float64 {
