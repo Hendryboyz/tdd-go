@@ -17,6 +17,9 @@ go test -bench="."
 # get test coverage
 go test -cover
 
+# check race condition
+go test -race
+
 # view the document in http://localhost:6060/pkg/
 $ godoc -http=:6060
 
