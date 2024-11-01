@@ -25,6 +25,9 @@ $ godoc -http=:6060
 
 # format current directory
 $ gofmt -w .
+
+# examines Go source code and reports suspicious constructs
+$ go vet
 ```
 
 ## Dependencies Modules
