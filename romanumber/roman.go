@@ -5,7 +5,7 @@ import (
 )
 
 type RomanNumeral struct {
-	Value  int
+	Value  uint16
 	Symbol string
 }
 
@@ -25,7 +25,7 @@ var allRomanNumerals = []RomanNumeral{
 	{1, "I"},
 }
 
-func ConvertToRoman(arabic int) string {
+func ConvertToRoman(arabic uint16) string {
 
 	// A Builder is used to efficiently build a string using Write methods. It minimizes memory copying.
 	var romanNumber strings.Builder
@@ -38,8 +38,8 @@ func ConvertToRoman(arabic int) string {
 	return romanNumber.String()
 }
 
-func ConvertToArabic(romanNumeral string) int {
-	arabic := 0
+func ConvertToArabic(romanNumeral string) uint16 {
+	var arabic uint16 = 0
 	for _, numeral := range allRomanNumerals {
 		for strings.HasPrefix(romanNumeral, numeral.Symbol) {
 			arabic += numeral.Value
