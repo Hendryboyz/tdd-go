@@ -1,28 +1,26 @@
-package sum
+package genericlist
 
 func Sum(numbers []int) (sum int) {
-	for _, number := range numbers {
-		sum += number
+	add := func(prev, cur int) int {
+		return prev + cur
 	}
-	return
+	return Reduce(numbers, add, 0)
 }
 
 func SumAll(numbersToSum ...[]int) []int {
-	var sums []int
-	for _, numbers := range numbersToSum {
-		sums = append(sums, Sum(numbers))
+	sumAll := func(prev, current []int) []int {
+		return append(prev, Sum(current))
 	}
-	return sums
+	return Reduce(numbersToSum, sumAll, []int{})
 }
 
 func SumAllTails(numbersToSum ...[]int) (sums []int) {
-	for _, numbers := range numbersToSum {
-		if len(numbers) <= 1 {
-			sums = append(sums, 0)
-			continue
+	sumTail := func(prev, current []int) []int {
+		if len(current) <= 1 {
+			return append(prev, 0)
 		}
-		tail := numbers[1:]
-		sums = append(sums, Sum(tail))
+		tail := current[1:]
+		return append(prev, Sum(tail))
 	}
-	return
+	return Reduce(numbersToSum, sumTail, []int{})
 }
