@@ -2,45 +2,44 @@ package romannumber
 
 import "strings"
 
-type RomanNumeral struct {
-	Value  int
-	Symbol string
+type RomanNumber struct {
+	Value int
+	Roman string
 }
 
-var allRomanNumeral = []RomanNumeral{
-	{Value: 1000, Symbol: "M"},
-	{Value: 900, Symbol: "CM"},
-	{Value: 500, Symbol: "D"},
-	{Value: 400, Symbol: "CD"},
-	{Value: 100, Symbol: "C"},
-	{Value: 90, Symbol: "XC"},
-	{Value: 50, Symbol: "L"},
-	{Value: 40, Symbol: "XL"},
-	{Value: 10, Symbol: "X"},
-	{Value: 9, Symbol: "IX"},
-	{Value: 5, Symbol: "V"},
-	{Value: 4, Symbol: "IV"},
-	{Value: 1, Symbol: "I"},
+var AllRomanNumbers = []RomanNumber{
+	{Value: 1000, Roman: "M"},
+	{Value: 900, Roman: "CM"},
+	{Value: 500, Roman: "D"},
+	{Value: 400, Roman: "CD"},
+	{Value: 100, Roman: "C"},
+	{Value: 90, Roman: "XC"},
+	{Value: 50, Roman: "L"},
+	{Value: 40, Roman: "XL"},
+	{Value: 10, Roman: "X"},
+	{Value: 9, Roman: "IX"},
+	{Value: 5, Roman: "V"},
+	{Value: 4, Roman: "IV"},
+	{Value: 1, Roman: "I"},
 }
 
 func ConvertRoman(arabic int) string {
-
-	var romanNumber strings.Builder
-	for _, roman := range allRomanNumeral {
-		for arabic >= roman.Value {
-			romanNumber.WriteString(roman.Symbol)
-			arabic -= roman.Value
+	var roman strings.Builder
+	for _, number := range AllRomanNumbers {
+		for arabic >= number.Value {
+			arabic -= number.Value
+			roman.WriteString(number.Roman)
 		}
 	}
-	return romanNumber.String()
+	return roman.String()
 }
 
 func ConvertArabic(roman string) int {
-	var arabic int
-	for _, numeral := range allRomanNumeral {
-		for strings.HasPrefix(roman, numeral.Symbol) {
-			arabic += numeral.Value
-			roman = strings.TrimPrefix(roman, numeral.Symbol)
+	arabic := 0
+	for _, number := range AllRomanNumbers {
+		for strings.HasPrefix(roman, number.Roman) {
+			roman = strings.TrimPrefix(roman, number.Roman)
+			arabic += number.Value
 		}
 	}
 	return arabic
