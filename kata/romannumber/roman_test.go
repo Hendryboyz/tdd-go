@@ -3,29 +3,36 @@ package romannumber
 import (
 	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/suite"
 )
 
-func TestRomanNumber(t *testing.T) {
-	testCases := []struct {
-		Arabic int
-		Roman  string
-	}{
+type RomanTest struct {
+	Arabic int
+	Roman  string
+}
+
+type RomanNumeralTestSuite struct {
+	suite.Suite
+	TestCases []RomanTest
+}
+
+func (s *RomanNumeralTestSuite) SetupTest() {
+	s.TestCases = []RomanTest{
 		{Arabic: 1, Roman: "I"},
 		{Arabic: 2, Roman: "II"},
 		{Arabic: 3, Roman: "III"},
 		{Arabic: 4, Roman: "IV"},
 		{Arabic: 5, Roman: "V"},
-		{Arabic: 6, Roman: "VI"},
-		{Arabic: 7, Roman: "VII"},
+		{Arabic: 8, Roman: "VIII"},
 		{Arabic: 9, Roman: "IX"},
 		{Arabic: 10, Roman: "X"},
-		{Arabic: 14, Roman: "XIV"},
-		{Arabic: 16, Roman: "XVI"},
+		{Arabic: 18, Roman: "XVIII"},
 		{Arabic: 20, Roman: "XX"},
 		{Arabic: 39, Roman: "XXXIX"},
-		{Arabic: 50, Roman: "L"},
 		{Arabic: 40, Roman: "XL"},
 		{Arabic: 49, Roman: "XLIX"},
+		{Arabic: 50, Roman: "L"},
 		{Arabic: 100, Roman: "C"},
 		{Arabic: 90, Roman: "XC"},
 		{Arabic: 400, Roman: "CD"},
@@ -38,27 +45,32 @@ func TestRomanNumber(t *testing.T) {
 		{Arabic: 1006, Roman: "MVI"},
 		{Arabic: 798, Roman: "DCCXCVIII"},
 	}
+}
 
-	for _, test := range testCases {
-		t.Run(fmt.Sprintf("convert %d to %s", test.Arabic, test.Roman), func(t *testing.T) {
-			expected := test.Roman
-			roman := ConvertRoman(test.Arabic)
-
-			if expected != roman {
-				t.Errorf("expect %q but got %q", expected, roman)
-			}
+func (s *RomanNumeralTestSuite) TestConvertRoman() {
+	for _, eachCase := range s.TestCases {
+		s.Run(fmt.Sprintf("convert %d to %s", eachCase.Arabic, eachCase.Roman), func() {
+			roman := ConvertRoman(eachCase.Arabic)
+			expected := eachCase.Roman
+			s.Equal(roman, expected, "expected %q but got %q", expected, roman)
 		})
 	}
+}
 
-	for _, test := range testCases {
-		t.Run(fmt.Sprintf("convert %s to %d", test.Roman, test.Arabic), func(t *testing.T) {
-			expected := test.Arabic
-			arabic := ConvertArabic(test.Roman)
-
-			if expected != arabic {
-				t.Errorf("expected %d but got %d", expected, arabic)
-			}
+func (s *RomanNumeralTestSuite) TestConvertArabic() {
+	for _, eachCase := range s.TestCases {
+		s.Run(fmt.Sprintf("convert %s to %d", eachCase.Roman, eachCase.Arabic), func() {
+			arabic := ConvertArabic(eachCase.Roman)
+			expected := eachCase.Arabic
+			s.Equal(arabic, expected, "expected %d but got %d", expected, arabic)
 		})
 	}
+}
 
+func (s *RomanNumeralTestSuite) TeardownTest() {
+
+}
+
+func TestRomanNumeral(t *testing.T) {
+	suite.Run(t, new(RomanNumeralTestSuite))
 }
